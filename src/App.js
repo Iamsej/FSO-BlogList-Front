@@ -1,21 +1,21 @@
-import React, { useState, useEffect } from 'react'
+import React, { useState, useEffect, useRef } from 'react'
 import Blog from './components/Blog'
 import Notice from './components/Notice'
 import SubmissionForm from './components/SubmissionForm'
+import LoginForm from './components/LoginForm'
+import Togglable from './components/Togglable'
 import blogService from './services/blogs'
 import loginService from './services/login'
 
 const App = () => {
   const [blogs, setBlogs] = useState([])
-  const [newTitle, setTitle] = useState('')
-  const [newAuthor, setAuthor] = useState('')
-  const [newUrl, setUrl] = useState('')
   const [error, setError] = useState(null)
   const [message, setMessage] = useState(null)
   const [username, setUsername] = useState('')
   const [password, setPassword] = useState('')
   const [user, setUser] = useState(null)
 
+  const noteFormRef = useRef()
 
   useEffect(() => {
     blogService.getAll().then(blogs =>
@@ -32,17 +32,16 @@ const App = () => {
     }
   }, [])
 
-  const handleTitleInput = (event) => {
-    setTitle(event.target.value)
+
+
+  const handleUsernameInput = (event) => {
+    setUsername(event.target.value)
+  }
+  
+  const handlePasswordInput = (event) => {
+    setPassword(event.target.value)
   }
 
-  const handleAuthorInput = (event) => {
-    setAuthor(event.target.value)
-  }
-
-  const handleUrlInput = (event) => {
-    setUrl(event.target.value)
-  }
 
   const handleLogin = async (event) => {
     event.preventDefault()
@@ -73,17 +72,12 @@ const App = () => {
     setUser(null)
   }
 
-  const addBlog = async (event) => {
-    event.preventDefault()
-    const blog = {
-      title: newTitle,
-      author: newAuthor,
-      url: newUrl
-    }
-
-    const response = await blogService.sendBlog(blog)
+  const addBlog = async (blogObject) => {
+    noteFormRef.current.toggleVisibility()
+    const response = await blogService.sendBlog(blogObject)
+    console.log(response)
     setBlogs(blogs.concat(response))
-    setMessage(`New blog "${newTitle}" by ${newAuthor} sucessfully added`)
+    setMessage(`New blog "${response.title}" by ${response.author} sucessfully added`)
     setTimeout(()=> {setMessage(null)}, 5000)
 
   }
@@ -92,45 +86,24 @@ const App = () => {
     ?
       <div>
         <Notice message={message} error={error}/>
-        <h2>Log in to application</h2>
-        <form onSubmit={handleLogin} autoComplete='off'>
-          <div>
-            Username: {} 
-              <input
-              type='text'
-              value={username}
-              name='Username'
-              onChange={({target}) => setUsername(target.value)}
-              />
-          </div>
-          <br/>
-          <div>
-            Password: {} 
-              <input
-              type='text'
-              value={password}
-              name='Password'
-              onChange={({target}) => setPassword(target.value)}
-              />
-          </div>
-          <button type='submit'>login</button>
-        </form>
+          <LoginForm 
+          username={username} password={password}
+          handleUsernameChange={handleUsernameInput}
+          handlePasswordChange={handlePasswordInput}
+          handleLogin={handleLogin}
+        />
       </div>
   :
     <div>
       <Notice message={message} error={error}/>
       <h2>blogs</h2>
       <div>
-        <p>
         {user.name} logged in <button onClick={logout}>logout</button>
-        </p>
       </div>
       <br/>
-      <SubmissionForm 
-      titleField={newTitle} titleInput={handleTitleInput}
-      authorField={newAuthor} authorInput={handleAuthorInput}
-      urlField={newUrl} urlInput={handleUrlInput}
-      submission={addBlog}/>
+      <Togglable buttonLabel='Show' ref={noteFormRef}>
+        <SubmissionForm submission={addBlog}/>
+      </Togglable>
       <br/>
       <br/>
       {blogs.map(blog =>
