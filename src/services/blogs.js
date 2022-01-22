@@ -21,6 +21,15 @@ const sendBlog = async newObject => {
   return response.data
 }
 
+const deleteBlog = async id => {
+  const config = {
+    headers: { Authorization: token },
+  }
+
+  const response = await axios.delete(`${baseUrl}/${id}`, config)
+  return response.data
+}
+
 const setLikes = async (oldObject, objectId) => {
   const config = {
     headers: { Authorization: token }
@@ -31,4 +40,4 @@ const setLikes = async (oldObject, objectId) => {
 }
 
 
-export default { getAll, setToken, sendBlog, setLikes }
+export default { getAll, setToken, sendBlog, setLikes, deleteBlog }

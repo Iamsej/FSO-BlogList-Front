@@ -86,13 +86,26 @@ const App = () => {
     console.log(response)
   }
 
+  const deleteBlog = async (blog) => {
+    if(window.confirm(`Are you sure you want to delete ${blog.title}?`)){
+      await blogService.deleteBlog(blog.id)
+      setBlogs(blogs.filter(blogs => blogs.id !== blog.id))
+    } else {
+      return 'Deletion cancelled'
+    }
+  }
+
   const sortBlogs = (blogList) => {
     console.log(blogList)
     const midList = blogList.sort(function(a,b){
       return(b.likes - a.likes)
     })
     const blogOut = midList.map(blog => 
-      <Blog key={blog.id} blog={blog} likes={addLike}/>
+      <Blog 
+       key={blog.id} blog={blog}
+       likes={addLike} deletion={deleteBlog}
+       user={user}
+      />
     )
     return blogOut
   }
