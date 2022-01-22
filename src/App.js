@@ -86,6 +86,17 @@ const App = () => {
     console.log(response)
   }
 
+  const sortBlogs = (blogList) => {
+    console.log(blogList)
+    const midList = blogList.sort(function(a,b){
+      return(b.likes - a.likes)
+    })
+    const blogOut = midList.map(blog => 
+      <Blog key={blog.id} blog={blog} likes={addLike}/>
+    )
+    return blogOut
+  }
+    
   return user === null
     ?
       <div>
@@ -110,9 +121,7 @@ const App = () => {
       </Togglable>
       <br/>
       <br/>
-      {blogs.map(blog =>
-        <Blog key={blog.id} blog={blog} likes={addLike}/>
-      )}
+      {sortBlogs(blogs)}
     </div>
 }
 

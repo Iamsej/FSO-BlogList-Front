@@ -13,6 +13,7 @@ const Blog = ({blog, likes}) => {
     setVisible(!visible)
   }
 
+  console.log(blog.likes)
   const addLike = async (event) => {
     event.preventDefault()
     likes({
