@@ -96,7 +96,6 @@ const App = () => {
   }
 
   const sortBlogs = (blogList) => {
-    console.log(blogList)
     const midList = blogList.sort(function(a,b){
       return(b.likes - a.likes)
     })
