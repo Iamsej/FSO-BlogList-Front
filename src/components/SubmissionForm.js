@@ -34,13 +34,19 @@ const SubmissionForm = ({ submission }) => {
   return(
     <form onSubmit={addBlog}>
       <div>
-          Title: <input value={newTitle} onChange={handleTitleInput}/>
+          Title: <input
+          className='titleInput' value={newTitle}
+          onChange={handleTitleInput}/>
       </div>
       <div>
-          Author: <input value={newAuthor} onChange={handleAuthorInput}/>
+          Author: <input
+          className='authorInput' value={newAuthor}
+          onChange={handleAuthorInput}/>
       </div>
       <div>
-          url: <input value={newUrl} onChange={handleUrlInput}/>
+          url: <input
+          className='urlInput' value={newUrl}
+          onChange={handleUrlInput}/>
       </div>
       <div>
         <button type="submit">add</button>
