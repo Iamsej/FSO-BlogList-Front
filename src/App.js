@@ -79,7 +79,11 @@ const App = () => {
     setBlogs(blogs.concat(response))
     setMessage(`New blog "${response.title}" by ${response.author} sucessfully added`)
     setTimeout(()=> {setMessage(null)}, 5000)
+  }
 
+  const addLike = async (blogObject, id) => {
+    const response = await blogService.setLikes(blogObject, id)
+    console.log(response)
   }
 
   return user === null
@@ -107,7 +111,7 @@ const App = () => {
       <br/>
       <br/>
       {blogs.map(blog =>
-        <Blog key={blog.id} blog={blog} />
+        <Blog key={blog.id} blog={blog} likes={addLike}/>
       )}
     </div>
 }

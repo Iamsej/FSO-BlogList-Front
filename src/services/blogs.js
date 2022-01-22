@@ -21,6 +21,14 @@ const sendBlog = async newObject => {
   return response.data
 }
 
+const setLikes = async (oldObject, objectId) => {
+  const config = {
+    headers: { Authorization: token }
+  }
+
+  const response = await axios.patch(`${baseUrl}/${objectId}`, oldObject, config)
+  return response.data
+}
 
 
-export default { getAll, setToken, sendBlog }
+export default { getAll, setToken, sendBlog, setLikes }
