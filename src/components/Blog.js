@@ -4,6 +4,7 @@ import React, { useState } from 'react'
 
 const Blog = ({blog, likes}) => {
   const [visible, setVisible] = useState(false)
+  const [likeCount, setLikeCount] = useState(blog.likes)
 
   const hideWhenVisible = { display: visible ? 'none' : '' }
   const showWhenVisible = { display: visible ? '' : 'none' }
@@ -15,10 +16,10 @@ const Blog = ({blog, likes}) => {
   const addLike = async (event) => {
     event.preventDefault()
     likes({
-      likes: blog.likes + 1
+      likes: likeCount + 1
     }, blog.id)
 
-    setVisible(true)
+    setLikeCount(likeCount + 1)
   }
 
   return(
@@ -33,7 +34,7 @@ const Blog = ({blog, likes}) => {
     <br/>
     {blog.url}
     <br/>
-    {blog.likes} {}
+    {likeCount} {}
     <button onClick={addLike}>like</button>
     <br/>
     {blog.user.username}
