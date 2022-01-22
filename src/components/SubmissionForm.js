@@ -1,6 +1,6 @@
-import React, {useState} from 'react'
+import React, { useState } from 'react'
 
-const SubmissionForm = ({ submission }) =>{
+const SubmissionForm = ({ submission }) => {
 
   const [newTitle, setTitle] = useState('')
   const [newAuthor, setAuthor] = useState('')
@@ -9,7 +9,7 @@ const SubmissionForm = ({ submission }) =>{
   const handleUrlInput = (event) => {
     setUrl(event.target.value)
   }
-  
+
   const handleTitleInput = (event) => {
     setTitle(event.target.value)
   }
@@ -31,22 +31,22 @@ const SubmissionForm = ({ submission }) =>{
     setUrl('')
   }
 
-    return(
-        <form onSubmit={addBlog}>
-        <div>
+  return(
+    <form onSubmit={addBlog}>
+      <div>
           Title: <input value={newTitle} onChange={handleTitleInput}/>
-        </div>
-        <div>
+      </div>
+      <div>
           Author: <input value={newAuthor} onChange={handleAuthorInput}/>
-        </div>
-        <div>
+      </div>
+      <div>
           url: <input value={newUrl} onChange={handleUrlInput}/>
-        </div>
-        <div>
-          <button type="submit">add</button>
-        </div>
-      </form>
-    )
+      </div>
+      <div>
+        <button type="submit">add</button>
+      </div>
+    </form>
+  )
 }
 
 export default SubmissionForm

@@ -20,7 +20,7 @@ const App = () => {
   useEffect(() => {
     blogService.getAll().then(blogs =>
       setBlogs( blogs )
-    )  
+    )
   }, [])
 
   useEffect(() => {
@@ -37,7 +37,7 @@ const App = () => {
   const handleUsernameInput = (event) => {
     setUsername(event.target.value)
   }
-  
+
   const handlePasswordInput = (event) => {
     setPassword(event.target.value)
   }
@@ -78,7 +78,7 @@ const App = () => {
     console.log(response)
     setBlogs(blogs.concat(response))
     setMessage(`New blog "${response.title}" by ${response.author} sucessfully added`)
-    setTimeout(()=> {setMessage(null)}, 5000)
+    setTimeout(() => {setMessage(null)}, 5000)
   }
 
   const addLike = async (blogObject, id) => {
@@ -100,28 +100,28 @@ const App = () => {
     const midList = blogList.sort(function(a,b){
       return(b.likes - a.likes)
     })
-    const blogOut = midList.map(blog => 
-      <Blog 
-       key={blog.id} blog={blog}
-       likes={addLike} deletion={deleteBlog}
-       user={user}
+    const blogOut = midList.map(blog =>
+      <Blog
+        key={blog.id} blog={blog}
+        likes={addLike} deletion={deleteBlog}
+        user={user}
       />
     )
     return blogOut
   }
-    
+
   return user === null
     ?
-      <div>
-        <Notice message={message} error={error}/>
-          <LoginForm 
-          username={username} password={password}
-          handleUsernameChange={handleUsernameInput}
-          handlePasswordChange={handlePasswordInput}
-          handleLogin={handleLogin}
-        />
-      </div>
-  :
+    <div>
+      <Notice message={message} error={error}/>
+      <LoginForm
+        username={username} password={password}
+        handleUsernameChange={handleUsernameInput}
+        handlePasswordChange={handlePasswordInput}
+        handleLogin={handleLogin}
+      />
+    </div>
+    :
     <div>
       <Notice message={message} error={error}/>
       <h2>blogs</h2>
